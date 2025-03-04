@@ -8,12 +8,13 @@ Created on Wed Oct 30 14:29:34 2024
 import torch
 from PIL import Image
 from torchvision import transforms
-from scripts.model import SiameseNetwork  # Update import path
+#from scripts.model import SiameseNetwork  # Update import path
+from model import SiameseNetwork  # Update import path
 import os
 # Load the trained model WITH DEVICE HANDLING
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = SiameseNetwork().to(device)
-model.load_state_dict(torch.load(r'C:\Users\Andrew\OneDrive\Dokumente\Arduino\image_project\models\model_1.pth', map_location=device))
+model.load_state_dict(torch.load(r'D:/pattern_recognition/models/model_3.pth', map_location=device))
 model.eval()
 
 # Update preprocessing to MATCH TRAINING (add normalization)
@@ -52,11 +53,12 @@ def predict_pattern(new_image_path, reference_patterns):
 # Example usage with error handling:
 # Example usage:
 reference_patterns = []
-pattern_folder = r"C:\Users\Andrew\OneDrive\Dokumente\Arduino\image_project\data"
-for pattern_num in range(1, 13):  # For 12 patterns
+pattern_folder = r"D:\TestPics_PHUD\testPics\pHUD50 Eco 0x0A-0x14_1500x250\dataset_mini"
+# for pattern_num in range(1, 13):  # For 12 patterns
+for pattern_num in range(1, 3):  # For 2 patterns
     pattern_path = os.path.join(pattern_folder, f"pattern_{pattern_num}", "img1.png")
     reference_patterns.append(pattern_path)
-new_image_path = r"C:\Users\Andrew\OneDrive\Dokumente\Arduino\image_project\test_pics\test_pic_8.png"
+new_image_path = r"C:\Users\testhouse.PZI17028\Pictures\Camera Roll\sample_6.png"
 try:
     predicted_pattern, distance = predict_pattern(new_image_path, reference_patterns)
     print(f"Predicted Pattern: {predicted_pattern}, Distance: {distance:.4f}")

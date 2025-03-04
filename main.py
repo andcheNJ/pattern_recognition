@@ -13,9 +13,10 @@ from scripts.utils import SiameseDataset, calculate_mean_std, visualize_embeddin
 from collections import Counter
 
 # --- Configuration ---
-dataset_path = 'data'
-epochs = 20
-batch_size = 32
+#dataset_path = 'data'
+dataset_path  = r"D:\TestPics_PHUD\testPics\pHUD50 Eco 0x0A-0x14_1500x250\dataset_mini"
+epochs = 10
+batch_size = 30
 lr = 0.001
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -79,7 +80,7 @@ class BalancedBatchSampler(BatchSampler):
 train_labels = [dataset.labels[i] for i in train_dataset.indices]
 train_sampler = BalancedBatchSampler(
     train_labels,
-    n_classes=4,  # Reduce if you have few classes
+    n_classes=2,  # Reduce if you have few classes
     n_samples=8   # Reduce if some classes have <16 samples
 )
 print("Samples per class:", Counter(train_labels))
@@ -202,8 +203,8 @@ for epoch in range(epochs):
             print("Early stopping triggered")
             break
         
-        if epoch % 5 == 0:  # Only visualize every 5 epochs
+        if epoch % 30 == 0:  # Only visualize every 5 epochs
             visualize_embeddings(model, val_loader)
 
 # Final save
-torch.save(model.state_dict(), r'C:\Users\Andrew\OneDrive\Dokumente\Arduino\image_project\models\model_1.pth')
+torch.save(model.state_dict(), r'D:\pattern_recognition\models\model_4.pth')
